@@ -54,7 +54,8 @@ MenuItem jpMenu[] = {
   { mcflurry, mcflurryWidth, mcflurryHeight, "McFlurry Strawberry Oreo",   320 }
 };
 
-bool addedFlags[5] = { false, false, false, false, false };
+int itemCount[5] = { 0, 0, 0, 0, 0 };
+const int MAX_QTY = 9;   // max per item 
 
 int currentPage = 1; 
 
@@ -96,19 +97,35 @@ void loop() {
 
     // Teriyaki
     if (touchInRect(SCREEN_W - 75, 115, 60, 30)) {
-      addedFlags[0] = !addedFlags[0];
+      if (itemCount[0] < MAX_QTY) itemCount[0]++;
       drawPage();
       delay(200);
       return;
     }
 
+    // Teriyaki MINUS
+if (touchInRect(SCREEN_W - 90, 115, 20, 20)) {
+    if (itemCount[0] > 0) itemCount[0]--;
+    drawPage();
+    delay(200);
+    return;
+}
+
     // Filet-O
     if (touchInRect(SCREEN_W - 75, 175, 60, 30)) {
-      addedFlags[1] = !addedFlags[1];
+      if (itemCount[1] < MAX_QTY) itemCount[1]++;
       drawPage();
       delay(200);
       return;
     }
+
+    // Filet-O MINUS
+if (touchInRect(SCREEN_W - 90, 175, 20, 20)) {
+    if (itemCount[1] > 0) itemCount[1]--;
+    drawPage();
+    delay(200);
+    return;
+}
   }
 
   // page 2
@@ -124,19 +141,35 @@ void loop() {
 
     // Shaka
     if (touchInRect(SCREEN_W - 75, 115, 60, 30)) {
-      addedFlags[2] = !addedFlags[2];
+      if (itemCount[2] < MAX_QTY) itemCount[2]++;
       drawPage();
       delay(200);
       return;
     }
 
+    // Shaka MINUS
+if (touchInRect(SCREEN_W - 90, 115, 20, 20)) {
+    if (itemCount[2] > 0) itemCount[2]--;
+    drawPage();
+    delay(200);
+    return;
+}
+
     // Gracoro
     if (touchInRect(SCREEN_W - 75, 175, 60, 30)) {
-      addedFlags[3] = !addedFlags[3];
+      if (itemCount[3] < MAX_QTY) itemCount[3]++;
       drawPage();
       delay(200);
       return;
     }
+
+    // Gracoro MINUS
+if (touchInRect(SCREEN_W - 90, 175, 20, 20)) {
+    if (itemCount[3] > 0) itemCount[3]--;
+    drawPage();
+    delay(200);
+    return;
+}
 
     // NEXT 
     if (touchInRect(SCREEN_W - 60, SCREEN_H - 25, 60, 20)) {
@@ -160,11 +193,19 @@ void loop() {
 
     // McFlurry
     if (touchInRect(SCREEN_W - 75, 145, 60, 30)) {
-      addedFlags[4] = !addedFlags[4];
+      if (itemCount[4] < MAX_QTY) itemCount[4]++;
       drawPage();
       delay(200);
       return;
     }
+
+    // McFlurry MINUS
+if (touchInRect(SCREEN_W - 90, 145, 20, 20)) {
+    if (itemCount[4] > 0) itemCount[4]--;
+    drawPage();
+    delay(200);
+    return;
+}
 
     // CHECKOUT 
     if (touchInRect(SCREEN_W - 90, SCREEN_H - 25, 90, 20)) {
@@ -219,13 +260,14 @@ void drawHeader() {
 void drawTotalBar() {
   int total = 0;
   for (int i = 0; i < 5; i++) {
-    if (addedFlags[i]) total += jpMenu[i].price;
+    total += itemCount[i] * jpMenu[i].price;
   }
 
   tft.setTextColor(TFT_BLACK);
   tft.setCursor(10, SCREEN_H - 25);
   tft.printf("Total: ¥%d", total);
 }
+
 
 void drawPage() {
   tft.fillRect(0, 90, SCREEN_W, SCREEN_H - 90, TFT_WHITE);
@@ -262,35 +304,43 @@ void drawPage() {
 }
 
 void drawItemCard(int index, int y) {
+  // Card background
   tft.fillRoundRect(10, y, 300, 60, 8, TFT_WHITE);
 
+  // Image
   tft.pushImage(15, y+8, jpMenu[index].w, jpMenu[index].h, jpMenu[index].img);
 
+  // Name
   tft.setTextColor(TFT_BLACK);
   tft.setCursor(80, y+18);
   tft.print(jpMenu[index].name);
 
+  // Price
   tft.setTextColor(TFT_RED);
   tft.setCursor(80, y+38);
   tft.printf("¥%d", jpMenu[index].price);
 
-  int addX = SCREEN_W - 75;
-  int addY = y + 15;
 
-  uint16_t red   = tft.color565(220, 30, 30);
-  uint16_t green = tft.color565(0, 180, 0);
+  int minusX = SCREEN_W - 90;
+  int plusX  = SCREEN_W - 40;
+  int btnY   = y + 18;
 
-  if (!addedFlags[index]) {
-    tft.fillRoundRect(addX, addY, 60, 30, 6, red);
-    tft.setTextColor(TFT_WHITE);
-    tft.setCursor(addX+12, addY+20);
-    tft.print("ADD");
-  } else {
-    tft.fillRoundRect(addX, addY, 60, 30, 6, green);
-    tft.setTextColor(TFT_WHITE);
-    tft.setCursor(addX+5, addY+20);
-    tft.print("ADDED");
-  }
+  tft.setTextColor(TFT_BLACK);
+  tft.setTextSize(2);
+
+  // minus
+  tft.setCursor(minusX, btnY);
+  tft.print("-");
+
+  // quantity number
+  tft.setCursor(minusX + 30, btnY);
+  tft.print(itemCount[index]);
+
+  // plus
+  tft.setCursor(plusX, btnY);
+  tft.print("+");
+
+  tft.setTextSize(1); // return to normal
 }
 
 void drawCheckoutPage() {
@@ -304,10 +354,11 @@ void drawCheckoutPage() {
   int total = 0;
 
   for (int i = 0; i < 5; i++) {
-    if (addedFlags[i]) {
+    if (itemCount[i] > 0) {
+      int lineTotal = itemCount[i] * jpMenu[i].price;
       tft.setCursor(20, y);
-      tft.printf("- %s  ¥%d", jpMenu[i].name, jpMenu[i].price);
-      total += jpMenu[i].price;
+      tft.printf("- %s x%d  ¥%d", jpMenu[i].name, itemCount[i], lineTotal);
+      total += lineTotal;
       y += 20;
     }
   }
@@ -315,26 +366,21 @@ void drawCheckoutPage() {
   tft.setCursor(20, y + 10);
   tft.printf("TOTAL: ¥%d", total);
 
-
   tft.setCursor(10, SCREEN_H - 10);
   tft.print("BACK");
 
+  int btnW = 110;
+  int btnH = 28;
+  int btnX = SCREEN_W - btnW - 10;
+  int btnY = SCREEN_H - btnH - 12;
 
-int btnW = 110; 
-int btnH = 28;   
-int btnX = SCREEN_W - btnW - 10; 
-int btnY = SCREEN_H - btnH - 12; 
+  uint16_t green = tft.color565(0, 180, 0);
+  tft.fillRoundRect(btnX, btnY, btnW, btnH, 6, green);
 
-uint16_t green = tft.color565(0, 180, 0);
-
-tft.fillRoundRect(btnX, btnY, btnW, btnH, 6, green);
-
-
-tft.setTextColor(TFT_WHITE);
-tft.setCursor(btnX + 12, btnY + 18);
-tft.print("PLACE ORDER");
+  tft.setTextColor(TFT_WHITE);
+  tft.setCursor(btnX + 12, btnY + 18);
+  tft.print("PLACE ORDER");
 }
-
 
 void drawOrderPlacedPage() {
   tft.fillRect(0, 90, SCREEN_W, SCREEN_H - 90, TFT_WHITE);
