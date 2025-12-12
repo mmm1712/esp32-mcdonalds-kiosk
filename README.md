@@ -1,9 +1,64 @@
-# esp32-mcdonalds-kiosk
-I recreated a McDonald’s-style ordering kiosk on the ESP32 with unique menu items from Japan. This project was inspired by ordering at McDonald’s in Tokyo and wanting t  o bring that experience to an esp32 device.
+# ESP32 McDonald’s Kiosk
 
-Features:  ILI9341Touchscreen UI with multi-page navigation, + / - interactive buttons, Dynamic price calculation ass you add items, Checkout screen displaying selected items, “Place Order” button leading to a confirmation screen, Japanese “ありがとうございました” order message, all images converted to RGB565 .h files for embedded displays
+I recreated a McDonald’s-style self-ordering kiosk on the ESP32, inspired by ordering at McDonald’s in Tokyo and wanting to bring that experience onto an embedded touchscreen device.
 
-Hardware: 2.8" ESP32 Touchscreen Module (ILI9341 + XPT2046) 
+This project focuses on UI design, touch interaction, and embedded system constraints rather than real-world payment or backend integration.
 
-  
-Notes: McDonald's API is private so real orders cannot be sent. This project is for educational and entertainment purposes
+
+## Features
+
+- Touchscreen UI built for a 2.8" ILI9341 display
+- Multi-page menu navigation (Next / Back / Checkout)
+- Interactive `+ / −` buttons with live quantity updates
+- Dynamic price calculation as items are added or removed
+- Checkout screen displaying selected items and order total
+- “Place Order” button leading to an order confirmation screen
+- Japanese-style order message (`ありがとうございました`)
+- All images converted to RGB565 `.h` files for embedded displays
+
+
+## Architecture Overview
+
+The project is structured to separate concerns:
+
+- **UI rendering** (`ui.cpp / ui.h`)
+- **Touch handling** (`touch.cpp / touch.h`)
+- **Menu data model** (`menu.cpp / menu.h`)
+- **Application flow / state machine** (page-based navigation)
+
+The UI avoids full screen redraws during interaction and only updates the necessary regions (e.g. quantity controls), which improves responsiveness and reflects real embedded UI design practices.
+
+
+## Hardware
+
+- ESP32
+- 2.8" Touchscreen Module  
+  - Display: **ILI9341**
+  - Touch Controller: **XPT2046**
+
+
+## Notes & Limitations
+
+- McDonald’s ordering APIs are private, so real orders cannot be placed
+- This project does **not** communicate with external services
+- Built for educational, experimental, and portfolio purposes only
+
+
+## What I Learned
+
+- Designing responsive UIs under embedded constraints
+- Managing state and navigation without a full OS
+- Optimizing redraw regions instead of refreshing entire screens
+- Structuring larger Arduino projects beyond a single `.ino` file
+
+## Demo
+
+### Menu Navigation
+![Menu Page 1](images/menu-page-1.jpg)
+![Menu Page 2](images/menu-page-2.jpg)
+
+### Checkout
+![Checkout Screen](images/checkout.jpg)
+
+### Order Confirmation
+![Order Confirmed](images/order-confirmed.jpg)
