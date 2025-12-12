@@ -1,5 +1,6 @@
 #ifndef CUSTOM_LOGO_H
 #define CUSTOM_LOGO_H
+#include <Arduino.h>
 
 const uint16_t customLogoWidth  = 40;
 const uint16_t customLogoHeight = 40;

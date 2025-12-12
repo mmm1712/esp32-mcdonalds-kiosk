@@ -1,5 +1,6 @@
 #ifndef GRACORO_H
 #define GRACORO_H
+#include <Arduino.h>
 
 const uint16_t gracoroWidth  = 40;
 const uint16_t gracoroHeight = 40;

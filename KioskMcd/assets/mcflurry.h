@@ -1,5 +1,6 @@
 #ifndef MCFLURRY_H
 #define MCFLURRY_H
+#include <Arduino.h>
 
 const uint16_t mcflurryWidth  = 40;
 const uint16_t mcflurryHeight = 40;

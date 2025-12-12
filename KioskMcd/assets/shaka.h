@@ -1,5 +1,6 @@
 #ifndef SHAKA_H
 #define SHAKA_H
+#include <Arduino.h>
 
 const uint16_t shakaWidth  = 40;
 const uint16_t shakaHeight = 40;

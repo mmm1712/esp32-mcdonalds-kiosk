@@ -1,5 +1,6 @@
 #ifndef TERIYAKI_H
 #define TERIYAKI_H
+#include <Arduino.h>
 
 const uint16_t teriyakiWidth  = 40;
 const uint16_t teriyakiHeight = 40;

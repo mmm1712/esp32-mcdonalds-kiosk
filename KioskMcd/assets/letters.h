@@ -1,5 +1,6 @@
 #ifndef LETTERS_H
 #define LETTERS_H
+#include <Arduino.h>
 
 const uint16_t lettersWidth  = 200;
 const uint16_t lettersHeight = 40;

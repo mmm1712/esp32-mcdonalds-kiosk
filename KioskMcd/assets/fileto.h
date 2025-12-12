@@ -1,5 +1,6 @@
 #ifndef FILETO_H
 #define FILETO_H
+#include <Arduino.h>
 
 const uint16_t filetoWidth  = 40;
 const uint16_t filetoHeight = 40;
