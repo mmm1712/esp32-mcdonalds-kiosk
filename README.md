@@ -53,12 +53,12 @@ The UI avoids full screen redraws during interaction and only updates the necess
 
 ## Demo
 
-### Menu Navigation
-![Menu Page 1](images/menu-page-1.jpg)
-![Menu Page 2](images/menu-page-2.jpg)
+### Menu Pages
+<img src="images/menu1.jpg" width="500">
+<img src="images/menu2.jpg" width="500">
 
 ### Checkout
-![Checkout Screen](images/checkout.jpg)
+<img src="images/checkout.jpg" width="500">
 
 ### Order Confirmation
-![Order Confirmed](images/order-confirmed.jpg)
+<img src="images/confirmation.jpg" width="500">
